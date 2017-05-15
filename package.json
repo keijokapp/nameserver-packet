@@ -1,0 +1,14 @@
+{
+  "name": "nameserver-packet",
+  "version": "0.0.2",
+  "description": "DNS Packet utilities for node-nameserver",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keijokapp/nameserver-packet"
+  },
+  "dependencies": {
+    "ip": "^1.1.5"
+  },
+  "author": "Keijo Kapp <keijo.kapp@gmail.com>",
+  "license": "MIT"
+}
