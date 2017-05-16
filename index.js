@@ -346,7 +346,7 @@ function serializeEdns(edns, buffer, cursor) {
  * @returns {Buffer} serialized packet ready to be sent
  */
 function serialize(packet) {
-	const buffer = new Buffer(512);
+	const buffer = Buffer.allocUnsafe(512);
 	var cursor = serializeHeader(packet, buffer, 0);
 
 	if('question' in packet) {
