@@ -114,10 +114,10 @@ function serializeHeader(packet, buffer, cursor) {
 
 	buffer.writeUInt16BE(packet.id, cursor);
 	buffer.writeUInt16BE(bits, cursor + 2);
-	buffer.writeUInt16BE(packet.question.length, cursor + 4);
-	buffer.writeUInt16BE(packet.answer.length, cursor + 6);
-	buffer.writeUInt16BE(packet.authority.length, cursor + 8);
-	buffer.writeUInt16BE(packet.additional.length, cursor + 10);
+	buffer.writeUInt16BE('question' in packet ? packet.question.length : 0, cursor + 4);
+	buffer.writeUInt16BE('answer' in packet ? packet.answer.length : 0, cursor + 6);
+	buffer.writeUInt16BE('authority' in packet ? packet.authority.length : 0, cursor + 8);
+	buffer.writeUInt16BE('additional' in packet ? packet.additional.length : 0, cursor + 10);
 
 	return cursor + 12;
 }
@@ -349,17 +349,28 @@ function serialize(packet) {
 	const buffer = new Buffer(512);
 	var cursor = serializeHeader(packet, buffer, 0);
 
-	for(const question of packet.question) {
-		cursor = serializeQuestion(question, buffer, cursor);
+	if('question' in packet) {
+		for(const question of packet.question) {
+			cursor = serializeQuestion(question, buffer, cursor);
+		}
 	}
-	for(const answer of packet.answer) {
-		cursor = serializeRecord(answer, buffer, cursor);
+
+	if('answer' in packet) {
+		for(const answer of packet.answer) {
+			cursor = serializeRecord(answer, buffer, cursor);
+		}
 	}
-	for(const authority of packet.authority) {
-		cursor = serializeRecord(authority, buffer, cursor);
+
+	if('authority' in packet) {
+		for(const authority of packet.authority) {
+			cursor = serializeRecord(authority, buffer, cursor);
+		}
 	}
-	for(const additional of packet.additional) {
-		cursor = serializeRecord(additional, buffer, cursor);
+
+	if('additional' in packet) {
+		for(const additional of packet.additional) {
+			cursor = serializeRecord(additional, buffer, cursor);
+		}
 	}
 
 	if('edns' in packet) {
