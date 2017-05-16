@@ -91,7 +91,7 @@ function labelsToString(labels) {
 
 /**
  * Serializes packet header into buffer
- * @param packet {Packet} packet object
+ * @param packet {object} packet object
  * @param buffer {Buffer} output buffer
  * @param cursor {number} buffer offset
  * @returns {number} header end offset
@@ -342,7 +342,7 @@ function serializeEdns(edns, buffer, cursor) {
 
 /**
  * Serializes packet object into buffer
- * @param {Packet} packet to be serialized
+ * @param {object} packet to be serialized
  * @returns {Buffer} serialized packet ready to be sent
  */
 function serialize(packet) {
@@ -597,9 +597,9 @@ function parseRecordData(buffer, cursor, record) {
 }
 
 /**
- * Parses buffer to Packet object
+ * Parses buffer to packet object
  * @param buffer {Buffer} input buffer
- * @return {Packet} packet object
+ * @return {object} packet object
  */
 function parse(buffer) {
 
@@ -664,14 +664,12 @@ function parse(buffer) {
 
 /**
  * Clones packet
- * @param packet {Packet} packet to be cloned
- * @return {Packet} cloned packet
+ * @param packet {object} packet to be cloned
+ * @return {object} cloned packet
  * TODO: proper clone
  */
 function clone(packet) {
-	const cloned = JSON.parse(JSON.stringify(packet));
-	Object.setPrototypeOf(cloned, Packet.prototype);
-	return cloned;
+	return JSON.parse(JSON.stringify(packet));
 }
 
 /**
